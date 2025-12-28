@@ -313,6 +313,7 @@
 </style>
 
 <script>
+(function(){
     let currentState = [[], [], []];
     let targetState = [[], [], []];
     const blockColors = ['a', 'b', 'c', 'd', 'e', 'f'];
@@ -476,4 +477,5 @@
 
     document.getElementById('blockCount').addEventListener('input', setupGame);
     setupGame();
+})();
 </script>

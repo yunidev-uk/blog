@@ -24,172 +24,171 @@
 </div>
 
 <style>
-    .towers-of-hanoi-container {
-        /* margin: 2rem 0; */
-        display: flex;
-        justify-content: center;
-        position: relative;
-        width: 710px;
-        max-width: 710px;
-    }
-    
-    .towers-of-hanoi-container .container {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        /* box-shadow: 0 10px 30px rgba(0,0,0,0.3); */
-        max-width: 800px;
-        width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-    }
+.towers-of-hanoi-container {
+    /* margin: 2rem 0; */
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 710px;
+    max-width: 710px;
+}
 
-    .towers-of-hanoi-container h1 {
-        text-align: center;
-        color: white;
-        margin-bottom: 30px;
-    }
+.towers-of-hanoi-container .container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    /* box-shadow: 0 10px 30px rgba(0,0,0,0.3); */
+    max-width: 800px;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
 
-    .towers-of-hanoi-container .controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
+.towers-of-hanoi-container h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
 
-    .towers-of-hanoi-container .control-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+.towers-of-hanoi-container .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-    .towers-of-hanoi-container .slider-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(255,255,255,0.2);
-        color: white;
-        border: 2px solid rgba(255,255,255,0.3);
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 14px;
-    }
+.towers-of-hanoi-container .control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .towers-of-hanoi-container input[type="range"] {
-        width: 100px;
-    }
+.towers-of-hanoi-container .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+}
 
-    .towers-of-hanoi-container button {
-        background: rgba(255,255,255,0.2);
-        color: white;
-        border: 2px solid rgba(255,255,255,0.3);
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.3s;
-    }
+.towers-of-hanoi-container input[type="range"] {
+    width: 100px;
+}
 
-    .towers-of-hanoi-container button:hover {
-        background: rgba(255,255,255,0.3);
-        border-color: rgba(255,255,255,0.5);
-    }
+.towers-of-hanoi-container button {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
 
-    .towers-of-hanoi-container .stats {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        font-weight: bold;
-    }
+.towers-of-hanoi-container button:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+}
 
-    .towers-of-hanoi-container .game-area {
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-end;
-        height: 300px;
-        margin: 20px 0;
-        position: relative;
-    }
+.towers-of-hanoi-container .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-weight: bold;
+}
 
-    .towers-of-hanoi-container .tower {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        width: 200px;
-        height: 100%;
-        position: relative;
-        padding-bottom: 15px;
-    }
+.towers-of-hanoi-container .game-area {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 300px;
+    margin: 20px 0;
+    position: relative;
+}
 
-    .towers-of-hanoi-container .tower::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        width: 10px;
-        height: 250px;
-        background: #8B4513;
-        border-radius: 5px;
-    }
+.towers-of-hanoi-container .tower {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    position: relative;
+    padding-bottom: 15px;
+}
 
-    .towers-of-hanoi-container .tower::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        width: 180px;
-        height: 15px;
-        background: #654321;
-        border-radius: 7px;
-        z-index: 1;
-    }
+.towers-of-hanoi-container .tower::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    height: 250px;
+    background: #8B4513;
+    border-radius: 5px;
+}
 
-    .towers-of-hanoi-container .ring {
-        height: 25px;
-        border-radius: 12px;
-        margin: 2px 0;
-        cursor: grab;
-        position: relative;
-        z-index: 10;
-        border: 2px solid rgba(0,0,0,0.2);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
+.towers-of-hanoi-container .tower::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 180px;
+    height: 15px;
+    background: #654321;
+    border-radius: 7px;
+    z-index: 1;
+}
 
-    .towers-of-hanoi-container .ring:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    }
+.towers-of-hanoi-container .ring {
+    height: 25px;
+    border-radius: 12px;
+    margin: 2px 0;
+    cursor: grab;
+    position: relative;
+    z-index: 10;
+    border: 2px solid rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 
-    .towers-of-hanoi-container .ring.dragging {
-        cursor: grabbing;
-        transform: scale(1.05);
-        z-index: 1000;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
+.towers-of-hanoi-container .ring:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
 
-    .towers-of-hanoi-container .victory {
-        position: absolute;
-        /* top: 50%; */
-        left: 50%;
-        text-align: center;
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-        animation: bounce 1s infinite;
-    }
+.towers-of-hanoi-container .ring.dragging {
+    cursor: grabbing;
+    transform: scale(1.05);
+    z-index: 1000;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
 
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
-        40% { transform: translate(-50%, -50%) translateY(-10px); }
-        60% { transform: translate(-50%, -50%) translateY(-5px); }
-    }
+.towers-of-hanoi-container .victory {
+    position: absolute;
+    /* top: 50%; */
+    left: 50%;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    40% { transform: translate(-50%, -50%) translateY(-10px); }
+    60% { transform: translate(-50%, -50%) translateY(-5px); }
+}
 </style>
 
 <script>
     (function() {
-        // Wrap in IIFE to avoid global conflicts
         class TowersOfHanoi {
             constructor() {
                 this.rings = 3;

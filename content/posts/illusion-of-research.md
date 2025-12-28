@@ -22,7 +22,7 @@ For many problems we can represent them as having a 'state space' - a point in t
 
 Tower of Hanoi involves three poles that can have discs on them. The discs start on the first poles, with the largest at the bottom, decreasing in size as they go up. The aim is to move the discs onto the last pole in the same configuration - largest at the bottom, smallest at the top - in the fewest number of moves. There are only three rules - you can only move one disc at a time, you can only move the top disc on any given pole, and you cannot place a disc on top of a smaller one. You can try it out below - see if you can figure out any patterns for how to solve it.
 
-{% include "./towers-of-hanoi.html" %}
+{% render "./towers-of-hanoi.html" %}
 
 The state space for Tower of Hanoi gets quite large, so let's just look at a section of it for 3 disc. For this puzzle, since every move can be reversed by just moving the disc back, all edges are bi-directional (can be taken in either direction).
 
@@ -92,6 +92,8 @@ Now, we can draw out a graph of the number of tokens required.
 
 So we can see quite clearly that any number of discs over 13 is completely impossible - even if the LLM could magically produce the answer from thin air, it wouldn't be able to write it out. But even more interesting is that with the amount of working out the LLM is doing per step, unless it can somehow magically become far more efficient with its working out, it couldn't complete even 9 discs within the token limit. Given that o3-mini successfully completes the problem for 7 discs roughly half of the time - with Claude (thinking) and Deepseek R1 even sometimes completing 8 discs - these models are doing just about the best they can on this problem.
 
+By providing different prompts that aim to get around the refusal problem it appears that the models can complete up to [15 disks](https://www.reddit.com/r/PromptEngineering/comments/1l9o71w/solving_tower_of_hanoi_for_n_15_with_llms_its_not/) and beyond. That said, attempts to improve LLM performance on this problem have been somewhat mixed - for example [Iñaki Dellibarda Varela](https://www.linkedin.com/pulse/rethinking-illusion-thinking-i%C3%B1aki-dellibarda-varela-osl1e) found that Google's Gemini 2.5 Pro failed at around 8 disks, but from looking at their code it appears they weren't providing the call stack/working out done by the model previously when asking for the next set of steps, so the model would have to either guess or reconstruct at what point in the algorithm it was in addition to just solving the problem.
+
 ## River Crossing
 
 Another puzzle used in the paper is the River Crossing problem, involving $n$ actors and $n$ agents, as well as a boat that can contain a maximum of $k$ people at a given time. Everyone starts on the left bank of a river, including the boat. The aim is to transport everyone to the other side. The boat requires at least 1 person inside to be able to move, and an actor cannot be left with another agent unless it's own agent is also with it.
@@ -108,6 +110,8 @@ So then it's hardly a surprise that the results for the River Crossing task show
 
 <img src="../media/river-crossing-graph.png" alt="Graph showing river crossing accuracy vs number of people" />
 
+More recently, [Iñaki Dellibarda Varela](https://www.linkedin.com/pulse/rethinking-illusion-thinking-i%C3%B1aki-dellibarda-varela-osl1e) ran some of their own tests using Gemini 2.5 Pro and found that it was actually incredibly good at the River Crossing problem. Do note that Gemini 2.5 performs significantly better than many of the models tested in the original paper on many benchmarks - it's not necessarily an even comparison, but it does show that reasoning models aren't inherently incapable of solving this problem for higher complexities.
+
 ## Blocks World
 
 Blocks World is a puzzle that involves moving blocks around to try and reach a given target state from an initial state in the fewest moves. It's similar to Tower of Hanoi, but is much more general - the only restriction is that a block can only be picked up or placed on the top of a stack (or on an empty stack). For the general case, the best we can really do to solve this algorithmically is to search through all the possible block arrangements using something like A* - a common search algorithm used for planning problems. But even using this, it can easily require checking hundreds of thousands of arrangements for anything more than 10 blocks.
@@ -120,13 +124,9 @@ So, what's the strategy? Well, I asked o3-mini.
 
 <img src="../media/thinking-trace-blocks.png" alt="Thinking trace for blocks world solution" />
 
-If that wasn't clear, we can alternate between pulling a block from stack 1 and stack 2, moving the blocks onto stack 3. Once this is done, we move all of stack 3 to stack 2, which reverses it, then move all of stack 2 to stack 1, reversing it again and giving us our final result.
+And that algorithm does indeed produce the correct arrangement, but it's not optimal, and therefore not the solution - recall that the goal is to get to the target state in the *fewest moves*. Interestingly, every single LLM I asked gave the exact same algorithm as described above, even with multiple attempts at it.
 
-And that algorithm does indeed produce the correct arrangement, but it's not optimal, and therefore not the solution - recall that the goal is to get to the target state in the *fewest moves*. Interestingly, every single LLM I asked gave the exact same algorithm as described above.
-
-The optimal algorithm is to move all but one block from stack 1 to stack 2, move the last one from stack 1 to stack 3, then move the blocks we just moved on top of stack 2 to stack 3. This should result in stack 2 being the same as the start, and stack 3 containing exactly the blocks that stack 1 did initially. Then, we can just alternate pulling blocks from stack 2 and stack 3 to construct the correct final arrangement on stack 1.
-
-This solution requires $2n-1$ moves, whereas the LLM's answer requires $3n-2$ moves.
+The optimal solution requires $2n-1$ moves, whereas the LLM's answer requires $3n-2$ moves - a visualisation of the two approaches can be seen below for $N=6$.
 
 {% render "./blocks-world-anim.html" %}
 
@@ -136,10 +136,6 @@ The paper provides a chart of how many moves each problem requires as $n$ increa
 
 Therefore, it may be the case that the 'correct' answers that the LLMs were evaluated against were, in fact, not actually correct. If so, that would invalidate the entirety of the results for the blocks world problem.
 
-## Acknowledgements
+
 
 Thanks to InfuriatinglyOpaque in DGG chat for discussion around this paper, as well as helping pull together various sources and articles.
-
-For anyone with more of a background on testing reasoning, yes, Towers of Hanoi is often used to test and/or demonstrate reasoning of models, but this is almost exclusively in situations where the model being tested is not capable of utilising the algorithm, or in some cases, a model may be capable of using the algorithm, but Towers of Hanoi is just one of many (as in, often 1 of 50) problems tested, with the results from it being largely inconsequential to the conclusions of the paper.
-
-If it's unclear why Towers of Hanoi is a different class of problem to the others, consider the steps required as a function of the solution length. Towers of Hanoi's algorithm is $O(n)$ with $n$ as solution length. Blocks World is $O(c^n)$, where $c$ is some branching factor.
