@@ -8,19 +8,21 @@
     --font-hand: "Comic Sans MS", "Chalkboard SE", sans-serif; /* Fallback for a "hand" feel */
 }
 
-body {
+html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-main);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
 }
 
 .stage {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -490,3 +492,81 @@ p {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 144, 255, 0.6); }
+
+/* --- Mobile / Portrait Enhancements --- */
+@media (max-width: 768px) {
+    /* Font Sizing Bump for Legibility on Small Screens */
+    h1 { font-size: 12vw; }
+    h2 { font-size: 8vw; }
+    h3 { font-size: 6vw; }
+    p, li { font-size: 4.5vw; max-width: 90vw; }
+    
+    /* Layout Adjustments */
+    .content-center { width: 95vw; }
+    
+    /* Split Screen Stack */
+    .split-screen {
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-y: auto; /* Allow scrolling if content is too tall */
+        padding-top: 20px;
+    }
+    .half {
+        width: 100%;
+        height: auto;
+        padding: 1rem 0;
+        border: none;
+        border-bottom: 1px solid #333;
+    }
+    .half.left { border-right: none; padding-right: 0; }
+    .half.right { padding-left: 0; }
+    
+    /* Gallery / Images */
+    .meme-grid {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 20px;
+        height: 60vh;
+        overflow-y: auto; /* Scrollable memes */
+        padding-bottom: 50px;
+    }
+    .meme-img { height: auto; max-height: 40vh; width: 100%; }
+    
+    .screenshot-container { width: 95%; }
+    .features-list { max-width: 95vw; }
+    
+    .olympics-screenshot { max-width: 90vw; }
+
+    /* Controls - Make bigger touch targets */
+    .controls {
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.7);
+        padding: 10px;
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+    }
+    .controls button { font-size: 2rem; padding: 10px; }
+
+    /* Doodles - Hide or Move to background */
+    .doodle {
+        opacity: 0.15 !important; /* Make very subtle */
+        filter: grayscale(100%);
+        z-index: 0;
+    }
+    
+    /* Testimonials */
+    .testimonial-gallery {
+        height: 60vh;
+        overflow-y: auto;
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+    .testimonial-img { max-width: 95vw; }
+    
+    /* CTA */
+    .cta-btn {
+        font-size: 6vw;
+        padding: 15px 30px;
+        width: 80%;
+    }
+}
