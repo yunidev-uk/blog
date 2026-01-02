@@ -138,8 +138,8 @@ body {
 
 /* Content Styling */
 .content-center {
-    width: 100%;
-    max-width: 1100px;
+    width: 90vw; /* Increased from 100% / max-width 1100px */
+    max-width: 1800px; /* Allow wider content for large screens */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -148,23 +148,47 @@ body {
     position: relative; /* For positioning doodles */
 }
 
-h1 { font-size: 4rem; margin: 0 0 1rem 0; color: #fff; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-h2 { font-size: 3rem; margin: 0 0 1.5rem 0; color: var(--accent-color); font-weight: 800; }
-h3 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 600; color: #fff; }
-p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-width: 800px; }
+h1 { 
+    font-size: 5vmin; 
+    margin: 0 0 1rem 0; 
+    color: #fff; 
+    letter-spacing: -1px; 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+}
+h2 { 
+    font-size: 4vmin; 
+    margin: 0 0 1.5rem 0; 
+    color: var(--accent-color); 
+    font-weight: 800; 
+}
+h3 { 
+    font-size: 2.5vmin; 
+    margin: 0 0 0.5rem 0; 
+    font-weight: 600; 
+    color: #fff; 
+}
+p { 
+    font-size: 2vmin; 
+    line-height: 1.6; 
+    color: #bbb; 
+    margin: 0 0 1.5rem 0; 
+    max-width: 80vw; 
+}
 
 /* Gallery */
 .gallery {
     display: flex;
+    flex-direction: column; /* Stack images vertically */
     gap: 30px;
     width: 100%;
+    align-items: center; /* Center them */
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 /* Olympics Slide */
 .olympics-screenshot {
-    max-width: 550px; /* Increased from 400px */
+    width: 100%; /* Take full width of container, or limit if desired */
+    max-width: 60vh; /* Base it on height so they fit vertically on screen */
     height: auto;
     border-radius: 8px;
     border: 1px solid #444;
@@ -184,12 +208,13 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
     opacity: 0; /* Hidden by default, animated in */
     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+    width: 15vmin; /* Responsive width */
 }
 
-.doodle.bigstiny { top: 60%; left: -10%; width: 220px; transform: rotate(-20deg); }
-.doodle.pepe { bottom: 50%; left: -10%; width: 200px; transform: rotate(15deg); }
-.doodle.glorp-small { top: 60%; right: -10%; width: 200px; transform: rotate(15deg); }
-.doodle.yee { bottom: 50%; right: -10%; width: 180px; transform: rotate(-25deg); }
+.doodle.bigstiny { top: 70%; left: 5%; transform: rotate(-20deg); }
+.doodle.pepe { top: 20%; left: 2%; transform: rotate(15deg); }
+.doodle.glorp-small { top: 70%; right: 5%; transform: rotate(15deg); }
+.doodle.yee { top: 20%; right: 2%; transform: rotate(-25deg); }
 
 @keyframes popIn {
     from { opacity: 0; transform: scale(0.5); }
@@ -198,8 +223,8 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 
 /* Screenshot & Feature List (New) */
 .screenshot-container {
-    width: 100%;
-    max-width: 1200px; /* Increased size */
+    width: 70%; /* Reduced from 95% */
+    max-width: none;
     margin: 0 auto 1.5rem;
     border-radius: 8px;
     overflow: hidden;
@@ -215,7 +240,7 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 
 .features-list {
     text-align: center;
-    max-width: 700px;
+    max-width: 70vw;
     margin: 0 auto;
 }
 
@@ -225,12 +250,12 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     margin: 1rem 0;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
 .features-list li {
-    font-size: 1.2rem;
+    font-size: 2.2vmin;
     color: #ddd;
     display: flex;
     align-items: center;
@@ -240,14 +265,14 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 .check {
     color: var(--accent-secondary);
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 2.5vmin;
 }
 
 .link-highlight {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 2.2vmin;
     border-bottom: 2px solid var(--accent-color);
     transition: opacity 0.2s;
 }
@@ -261,11 +286,21 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     margin: 0 4px;
 }
 
+/* Video */
+#gameTrailer {
+    width: 90vw;
+    max-width: 1600px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
 /* Flying Ship Animation */
 #glorp-ship {
     position: absolute;
-    width: 100vh; /* Even bigger */
-    max-width: 1000px;
+    width: 60vh; /* Scale with height */
+    max-width: none;
     top: -50vh;
     left: -50vw;
     z-index: 200;
@@ -332,7 +367,7 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 .half ul { list-style: none; padding: 0; text-align: left; }
 .half ul li { 
     margin-bottom: 20px; 
-    font-size: 1.8rem; /* Bigger checklist */
+    font-size: 2.5vmin; /* Bigger checklist */
     display: flex; 
     align-items: center; 
     gap: 15px; 
@@ -350,8 +385,8 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 .roast-img-styled {
     border-radius: 8px;
     border: 1px solid #444;
-    width: 260px;
-    height: 260px;
+    width: 20vmin;
+    height: 20vmin;
     object-fit: cover;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     transition: transform 0.2s;
@@ -370,7 +405,7 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 
 .roast-gallery figcaption {
     margin-top: 10px;
-    font-size: 1rem;
+    font-size: 1.5vmin;
     color: #888;
     font-family: var(--font-main);
 }
@@ -381,7 +416,7 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     grid-template-columns: 1fr 1fr;
     gap: 30px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 90vw;
     margin-top: 20px;
 }
 
@@ -394,8 +429,8 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 
 .meme-img {
     width: 100%;
-    max-width: 550px;
-    height: 450px;
+    max-width: none;
+    height: 35vh;
     object-fit: contain; /* Show full image */
     background: rgba(0,0,0,0.3); /* Dark background for letterboxing */
     border-radius: 8px;
@@ -410,7 +445,7 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 
 .meme-grid figcaption {
     margin-top: 10px;
-    font-size: 1.2rem;
+    font-size: 1.5vmin;
     color: #bbb;
 }
 
@@ -418,13 +453,13 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 .testimonial-gallery {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     align-items: center;
     width: 100%;
 }
 
 .testimonial-img {
-    max-width: 650px;
+    max-width: 85vw;
     height: auto;
     border-radius: 4px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -443,8 +478,8 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 /* CTA */
 .cta-btn {
     margin-top: 3rem;
-    padding: 15px 40px;
-    font-size: 1.4rem;
+    padding: 1.5vmin 4vmin;
+    font-size: 2.5vmin;
     background: var(--accent-color);
     color: #000;
     border: none;
