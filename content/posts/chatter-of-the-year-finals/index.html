@@ -24,8 +24,6 @@
 
         <div class="slide active" id="slide-1" data-duration="5000">
             <div class="content-center">
-                <div class="doodle-slot doodle-intro">Hand-drawn "VOTE ME" here</div>
-                
                 <h1>yuniDev</h1>
                 <h2>FOR DGGER OF THE YEAR</h2>
                 <p>Based bonger #1 <span class="emote UWOTM8"></span></p>
@@ -175,20 +173,18 @@
             let currentSlide = 0;
             let isPlaying = true;
             let slideTimer;
-            let remainingTime = 0;
-            let totalDuration = 0;
-            let startTime = 0;
-
             let transitionTimeout;
             let cleanupTimeout;
+            let videoUpdateInterval; // For tracking video progress
 
             function showSlide(index) {
                 if (index < 0) index = 0;
                 if (index >= slides.length) index = slides.length - 1;
                 
-                // Clear any pending transitions
+                // Clear any pending transitions/timeouts
                 clearTimeout(transitionTimeout);
                 clearTimeout(cleanupTimeout);
+                cancelAnimationFrame(videoUpdateInterval);
 
                 // Ensure clean state if rapid clicking
                 document.querySelector('.stage').classList.remove('no-transition');
@@ -209,7 +205,6 @@
                         if (i !== currentSlide && i !== index) {
                             s.classList.remove('active');
                             s.classList.remove('exit');
-                            // Ensure other videos are paused
                             const v = s.querySelector('video');
                             if (v) v.pause();
                         }
@@ -221,26 +216,40 @@
                     slide.classList.remove('exit');
                     slide.classList.add('active');
 
-                    // Play video if entering slide
-                    const newVideo = slide.querySelector('video');
-                    if (newVideo) {
-                        newVideo.currentTime = 0;
-                        newVideo.play().catch(e => console.log("Auto-play prevented:", e));
-                    }
-
                     // Reset progress bar
                     progressBar.style.transition = 'none';
                     progressBar.style.width = '0%';
                     
                     clearTimeout(slideTimer);
 
-                    // Auto-advance only if playing and not on last slide
-                    if (isPlaying && currentSlide < slides.length - 1) {
-                        const duration = parseInt(slide.getAttribute('data-duration'));
-                        startTimer(duration);
-                    } else if (currentSlide === slides.length - 1) {
-                        isPlaying = false;
-                        toggleBtn.textContent = "↻";
+                    // Check for video in new slide
+                    const newVideo = slide.querySelector('video');
+                    if (newVideo) {
+                        // Video Slide Logic
+                        newVideo.removeAttribute('controls'); // Ensure controls are hidden
+                        newVideo.currentTime = 0;
+                        if (isPlaying) {
+                            newVideo.play().catch(e => console.log("Auto-play prevented:", e));
+                            toggleBtn.textContent = "❚❚";
+                        } else {
+                             toggleBtn.textContent = "▶";
+                        }
+                        
+                        // Use video duration for progress
+                        trackVideoProgress(newVideo);
+
+                    } else {
+                        // Standard Slide Logic
+                        if (isPlaying && currentSlide < slides.length - 1) {
+                            const duration = parseInt(slide.getAttribute('data-duration'));
+                            startTimer(duration);
+                            toggleBtn.textContent = "❚❚";
+                        } else if (currentSlide === slides.length - 1) {
+                            isPlaying = false;
+                            toggleBtn.textContent = "↻";
+                        } else {
+                             toggleBtn.textContent = "▶";
+                        }
                     }
                 };
 
@@ -272,6 +281,24 @@
                 }
             }
 
+            function trackVideoProgress(video) {
+                const update = () => {
+                    if (currentSlide !== Array.from(slides).indexOf(video.closest('.slide'))) return;
+                    
+                    if (video.duration) {
+                        const pct = (video.currentTime / video.duration) * 100;
+                        progressBar.style.width = `${pct}%`;
+                    }
+
+                    if (video.ended) {
+                        nextSlide();
+                    } else {
+                        videoUpdateInterval = requestAnimationFrame(update);
+                    }
+                };
+                videoUpdateInterval = requestAnimationFrame(update);
+            }
+
             function startTimer(duration) {
                 // Force reflow for progress bar
                 void progressBar.offsetWidth;
@@ -299,6 +326,9 @@
             }
 
             function togglePlay() {
+                const slide = slides[currentSlide];
+                const video = slide.querySelector('video');
+
                 if (currentSlide === slides.length - 1) {
                     // Reset everything to start
                     slides.forEach(s => {
@@ -313,18 +343,32 @@
                 }
 
                 isPlaying = !isPlaying;
-                if (isPlaying) {
-                    toggleBtn.textContent = "❚❚";
-                    const duration = parseInt(slides[currentSlide].getAttribute('data-duration'));
-                    startTimer(duration); 
+
+                if (video) {
+                    // Video Toggle Logic
+                    if (isPlaying) {
+                        video.play();
+                        toggleBtn.textContent = "❚❚";
+                    } else {
+                        video.pause();
+                        toggleBtn.textContent = "▶";
+                    }
                 } else {
-                    toggleBtn.textContent = "▶";
-                    clearTimeout(slideTimer);
-                    
-                    const computedStyle = window.getComputedStyle(progressBar);
-                    const width = computedStyle.getPropertyValue('width');
-                    progressBar.style.transition = 'none';
-                    progressBar.style.width = width;
+                    // Standard Slide Toggle Logic
+                    if (isPlaying) {
+                        toggleBtn.textContent = "❚❚";
+                        const duration = parseInt(slide.getAttribute('data-duration'));
+                        // Simplification: Restart timer on resume (complex pause/resume not implemented for CSS transition)
+                        startTimer(duration); 
+                    } else {
+                        toggleBtn.textContent = "▶";
+                        clearTimeout(slideTimer);
+                        
+                        const computedStyle = window.getComputedStyle(progressBar);
+                        const width = computedStyle.getPropertyValue('width');
+                        progressBar.style.transition = 'none';
+                        progressBar.style.width = width;
+                    }
                 }
             }
 
