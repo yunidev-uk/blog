@@ -153,29 +153,6 @@ h2 { font-size: 3rem; margin: 0 0 1.5rem 0; color: var(--accent-color); font-wei
 h3 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 600; color: #fff; }
 p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-width: 800px; }
 
-/* Hand-Drawn Doodle Slots */
-.doodle-slot {
-    position: absolute;
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: var(--font-hand);
-    transform: rotate(-2deg);
-    pointer-events: none; /* Just decoration */
-    z-index: 5;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
-}
-/* Specific Doodle Positions (Relative to content-center or slide) */
-.doodle-intro { top: 10%; right: 10%; width: 150px; height: 150px; transform: rotate(5deg); }
-.doodle-check { bottom: 10%; left: 10%; width: 120px; height: 120px; transform: rotate(-3deg); }
-.doodle-arrow { top: 20%; left: 5%; width: 100px; height: 80px; transform: rotate(-10deg); }
-
 /* Gallery */
 .gallery {
     display: flex;
@@ -184,22 +161,6 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     justify-content: center;
     flex-wrap: wrap;
 }
-
-.placeholder-img {
-    width: 280px;
-    height: 200px;
-    background: #222;
-    border: 1px solid #444;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #666;
-    font-size: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    transition: transform 0.3s;
-}
-.placeholder-img:hover { transform: translateY(-5px); }
 
 /* Olympics Slide */
 .olympics-screenshot {
@@ -234,25 +195,6 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     from { opacity: 0; transform: scale(0.5); }
     to { opacity: 1; transform: scale(1) rotate(var(--rotation, 0deg)); }
 }
-
-/* Video */
-.video-placeholder {
-    width: 100%;
-    max-width: 1100px;
-    aspect-ratio: 16/9;
-    background: #000;
-    border: 1px solid #333;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.play-icon { font-size: 3rem; color: var(--accent-color); transition: transform 0.2s; }
-.video-placeholder:hover .play-icon { transform: scale(1.1); }
 
 /* Screenshot & Feature List (New) */
 .screenshot-container {
@@ -433,21 +375,6 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
     font-family: var(--font-main);
 }
 
-.roast-img {
-    /* Legacy placeholder style just in case */
-    width: 120px;
-    height: 120px;
-    background: #333;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #888;
-    border: 2px solid #555;
-}
-
 /* Meme Grid */
 .meme-grid {
     display: grid;
@@ -512,86 +439,6 @@ p { font-size: 1.3rem; line-height: 1.6; color: #bbb; margin: 0 0 1.5rem 0; max-
 @keyframes slideInFade {
     to { opacity: 1; transform: translateX(0); }
 }
-
-/* Radiant Analysis (New) */
-.radiant-analysis {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #333;
-    margin-bottom: 2rem;
-}
-
-.radiant-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.radiant-profile .pfp-placeholder {
-    width: 120px;
-    height: 120px;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #fff;
-    background: #444;
-}
-
-.radiant-stats {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.stat-label {
-    width: 140px;
-    text-align: right;
-    margin-right: 15px;
-    font-weight: bold;
-    color: #ccc;
-}
-
-.stat-bar-container {
-    flex-grow: 1;
-    height: 12px;
-    background: #333;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.stat-bar {
-    height: 100%;
-    border-radius: 6px;
-}
-
-.stat-value {
-    width: 60px;
-    text-align: right;
-    margin-left: 10px;
-    font-family: monospace;
-    font-size: 1.1rem;
-}
-
-.stat-value.negative { color: #d32f2f; }
-
-.verdict {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-    color: #ccc;
-    text-transform: uppercase;
-}
-
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
 /* CTA */
 .cta-btn {
