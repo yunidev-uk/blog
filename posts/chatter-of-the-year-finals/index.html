@@ -105,9 +105,16 @@
         <div class="slide" id="slide-5" data-duration="28000">
             <div class="content-center">
                 <h2>Coming Soon... <div class="emote SOON"></div></h2>
-                <video id="gameTrailer" controls>
-                    <source src="assets/trailer.mp4" type="video/mp4">
-                </video>
+                <div class="video-wrapper">
+                    <video id="gameTrailer" controls>
+                        <source src="assets/trailer.mp4" type="video/mp4">
+                    </video>
+                    <div id="videoOverlay" class="video-overlay" style="display: none;">
+                        <svg viewBox="0 0 24 24" fill="white">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
                 <p style="font-size: 1.5rem; color: var(--accent-secondary); margin-top: 1rem;">
                     Aiming for a demo around Easter 2026! <span class="emote Copium"></span>!!!
                 </p>
@@ -221,15 +228,28 @@
 
                     // Check for video in new slide
                     const newVideo = slide.querySelector('video');
+                    const overlay = slide.querySelector('.video-overlay');
+
                     if (newVideo) {
                         // Video Slide Logic
                         newVideo.removeAttribute('controls'); // Ensure controls are hidden
                         newVideo.currentTime = 0;
+                        
+                        if (overlay) overlay.style.display = 'none';
+
                         if (isPlaying) {
-                            newVideo.play().catch(e => console.log("Auto-play prevented:", e));
                             toggleBtn.textContent = "❚❚";
+                            newVideo.play().then(() => {
+                                if (overlay) overlay.style.display = 'none';
+                            }).catch(e => {
+                                console.log("Auto-play prevented:", e);
+                                isPlaying = false;
+                                toggleBtn.textContent = "▶";
+                                if (overlay) overlay.style.display = 'flex';
+                            });
                         } else {
                              toggleBtn.textContent = "▶";
+                             if (overlay) overlay.style.display = 'flex';
                         }
                         
                         // Use video duration for progress
@@ -342,13 +362,16 @@
                 isPlaying = !isPlaying;
 
                 if (video) {
+                    const overlay = slide.querySelector('.video-overlay');
                     // Video Toggle Logic
                     if (isPlaying) {
                         video.play();
                         toggleBtn.textContent = "❚❚";
+                        if (overlay) overlay.style.display = 'none';
                     } else {
                         video.pause();
                         toggleBtn.textContent = "▶";
+                        if (overlay) overlay.style.display = 'flex';
                     }
                 } else {
                     // Standard Slide Toggle Logic
@@ -370,6 +393,20 @@
             }
 
             // Event Listeners
+            const videoOverlay = document.getElementById('videoOverlay');
+            if (videoOverlay) {
+                videoOverlay.addEventListener('click', () => {
+                    const slide = slides[currentSlide];
+                    const video = slide.querySelector('video');
+                    if (video) {
+                        video.play();
+                        videoOverlay.style.display = 'none';
+                        isPlaying = true;
+                        toggleBtn.textContent = "❚❚";
+                    }
+                });
+            }
+
             toggleBtn.addEventListener('click', togglePlay);
             
             nextBtn.addEventListener('click', () => {
