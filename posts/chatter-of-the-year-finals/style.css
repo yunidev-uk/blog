@@ -426,9 +426,9 @@ p {
 .roast-img-styled {
     border-radius: 8px;
     border: 1px solid #444;
-    width: 20vmin;
-    height: 20vmin;
-    object-fit: cover;
+    width: 30vmin;
+    height: 30vmin;
+    object-fit: contain;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     transition: transform 0.2s;
 }
