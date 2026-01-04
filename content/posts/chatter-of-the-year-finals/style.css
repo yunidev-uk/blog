@@ -298,6 +298,45 @@ p {
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
+.video-wrapper {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 5;
+    border-radius: 8px; /* Match video radius */
+    transition: all 0.2s;
+    backdrop-filter: blur(1px);
+}
+
+.video-overlay:hover {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(0);
+}
+
+.video-overlay svg {
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+    transition: transform 0.2s;
+    width: 80px;
+    height: 80px;
+}
+
+.video-overlay:hover svg {
+    transform: scale(1.1);
+}
+
 /* Flying Ship Animation */
 #glorp-ship {
     position: absolute;
