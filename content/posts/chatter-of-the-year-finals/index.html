@@ -106,7 +106,7 @@
             <div class="content-center">
                 <h2>Coming Soon... <div class="emote SOON"></div></h2>
                 <div class="video-wrapper">
-                    <video id="gameTrailer" controls volume="0.5">
+                    <video id="gameTrailer" controls>
                         <source src="assets/trailer.mp4" type="video/mp4">
                     </video>
                     <div id="videoOverlay" class="video-overlay" style="display: none;">
@@ -234,6 +234,7 @@
                         // Video Slide Logic
                         newVideo.removeAttribute('controls'); // Ensure controls are hidden
                         newVideo.currentTime = 0;
+                        newVideo.volume = 0.5;
                         
                         if (overlay) overlay.style.display = 'none';
 
